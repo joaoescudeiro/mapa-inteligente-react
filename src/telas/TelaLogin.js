@@ -1,9 +1,35 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
+import firebase from '../services/firebaseConfig';
+import { Alert } from 'react-native';
 
-export default function TelaLogin() {
+export default function TelaLogin({ navigation }) {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+
+    function logar() {
+        const emailFormatado = email.toLowerCase();
+
+        firebase.auth()
+            .signInWithEmailAndPassword(emailFormatado, senha)
+            .then(() => {
+                Alert.alert("Sucesso", "Login realizado com sucesso!");
+                navigation.replace('Principal');
+            })
+            .catch(error => {
+                const errorCode = error.code;
+
+                if (errorCode === "auth/user-not-found")
+                    Alert.alert("Erro", "Usuário não encontrado");
+                else if (errorCode === "auth/wrong-password")
+                    Alert.alert("Erro", "Senha incorreta");
+                else if (errorCode === "auth/invalid-email")
+                    Alert.alert("Erro", "Formato de e-mail inválido");
+                else
+                    Alert.alert("Erro", error.message);
+            });
+    }
+
 
     return (
         <View style={styles.container}>
@@ -22,7 +48,7 @@ export default function TelaLogin() {
                 style={styles.input}
             />
 
-            <Button title="Entrar" onPress={() => { }} />
+            <Button title="Entrar" onPress={logar} />
         </View>
     );
 }

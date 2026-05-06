@@ -4,7 +4,7 @@ import firebase from '../services/firebaseConfig';
 import { Alert } from 'react-native';
 
 
-export default function TelaCadastro() {
+export default function TelaCadastro({ navigation }) {
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
@@ -16,6 +16,7 @@ export default function TelaCadastro() {
             .createUserWithEmailAndPassword(emailFormatado, senha)
             .then(() => {
                 Alert.alert("Sucesso", "Usuário cadastrado com sucesso!");
+                navigation.replace('Principal');
             })
             .catch(error => {
                 const errorCode = error.code;
