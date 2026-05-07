@@ -1,9 +1,39 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Button, StyleSheet, Alert } from 'react-native';
 import firebase from '../services/firebaseConfig';
 import MapView from 'react-native-maps';
+import * as Location from 'expo-location';
 
 export default function TelaPrincipal({ navigation }) {
+
+    const [regiao, setRegiao] = useState(null);
+
+    useEffect(() => {
+        async function pegarLocalizacao() {
+
+            const { status } = await Location.requestForegroundPermissionsAsync();
+
+            if (status !== 'granted') {
+                Alert.alert('Permissão negada', 'Não foi possível acessar sua localização');
+                return;
+            }
+
+            const location = await Location.getCurrentPositionAsync({});
+
+            setRegiao({
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01,
+            });
+        }
+
+        pegarLocalizacao();
+    }, []);
+
+    if (!regiao) {
+        return <View style={styles.container} />;
+    }
 
     function sair() {
         firebase.auth().signOut();
@@ -17,12 +47,8 @@ export default function TelaPrincipal({ navigation }) {
 
             <MapView
                 style={styles.map}
-                initialRegion={{
-                    latitude: -23.55052,
-                    longitude: -46.633308,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                }}
+                region={regiao}
+                showsUserLocation={true}
             />
         </View>
     );
