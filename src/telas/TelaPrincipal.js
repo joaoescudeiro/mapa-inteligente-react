@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
 import firebase from '../services/firebaseConfig';
+import MapView from 'react-native-maps';
 
 export default function TelaPrincipal({ navigation }) {
 
@@ -10,10 +11,29 @@ export default function TelaPrincipal({ navigation }) {
     }
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.container}>
             <Text>Usuário logado</Text>
-
             <Button title="Sair" onPress={sair} />
+
+            <MapView
+                style={styles.map}
+                initialRegion={{
+                    latitude: -23.55052,
+                    longitude: -46.633308,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                }}
+            />
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    map: {
+        width: '100%',
+        height: '100%',
+    },
+});
