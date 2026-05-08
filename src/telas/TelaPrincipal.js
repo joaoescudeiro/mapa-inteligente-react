@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import firebase from '../services/firebaseConfig';
 import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -35,6 +35,26 @@ export default function TelaPrincipal({ navigation }) {
         return <View style={styles.container} />;
     }
 
+    async function salvarLocalizacao() {
+
+        try {
+
+            const usuario = firebase.auth().currentUser;
+
+            await firebase.firestore().collection('locais').add({
+                latitude: regiao.latitude,
+                longitude: regiao.longitude,
+                usuarioId: usuario.uid,
+                data: new Date()
+            });
+
+            Alert.alert('Sucesso', 'Localização salva');
+
+        } catch (error) {
+            Alert.alert('Erro', error.message);
+        }
+    }
+
     function sair() {
         firebase.auth().signOut();
         navigation.replace('Inicio');
@@ -44,6 +64,13 @@ export default function TelaPrincipal({ navigation }) {
         <View style={styles.container}>
             <Text>Usuário logado</Text>
             <Button title="Sair" onPress={sair} />
+
+            <TouchableOpacity
+                style={styles.botaoSalvar}
+                onPress={salvarLocalizacao}
+            >
+                <Text style={styles.textoBotao}>Salvar Local</Text>
+            </TouchableOpacity>
 
             <MapView
                 style={styles.map}
@@ -61,5 +88,18 @@ const styles = StyleSheet.create({
     map: {
         width: '100%',
         height: '100%',
+    },
+    botaoSalvar: {
+        position: 'absolute',
+        top: 50,
+        left: 20,
+        backgroundColor: '#2196F3',
+        padding: 12,
+        borderRadius: 10,
+        zIndex: 1,
+    },
+    textoBotao: {
+        color: '#fff',
+        fontWeight: 'bold',
     },
 });
