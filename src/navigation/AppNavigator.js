@@ -5,6 +5,7 @@ import TelaInicio from '../telas/TelaInicio';
 import TelaLogin from '../telas/TelaLogin';
 import TelaCadastro from '../telas/TelaCadastro';
 import TelaPrincipal from '../telas/TelaPrincipal';
+import BottomTabs from './BottomTabs';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,9 +19,11 @@ export default function AppNavigator() {
                 }} />
                 <Stack.Screen name="Login" component={TelaLogin} />
                 <Stack.Screen name="Cadastro" component={TelaCadastro} />
-                <Stack.Screen name="Principal" component={TelaPrincipal} options={{
-                    headerBackVisible: false
-                }} />
+                <Stack.Screen
+                    name="Principal"
+                    component={BottomTabs}
+                    options={{ headerShown: false }}
+                />
 
             </Stack.Navigator>
         </NavigationContainer>
