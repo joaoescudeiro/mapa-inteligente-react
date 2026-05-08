@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, Alert, TouchableOpacity, Modal, TextInput } from 'react-native';
 import firebase from '../services/firebaseConfig';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 
 export default function TelaPrincipal({ navigation }) {
@@ -9,6 +9,8 @@ export default function TelaPrincipal({ navigation }) {
     const [regiao, setRegiao] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [nomeLocal, setNomeLocal] = useState('');
+    const [locais, setLocais] = useState([]);
+    const usuario = firebase.auth().currentUser;
 
     useEffect(() => {
         async function pegarLocalizacao() {
@@ -29,6 +31,25 @@ export default function TelaPrincipal({ navigation }) {
                 longitudeDelta: 0.01,
             });
         }
+
+        firebase.firestore()
+            .collection('locais')
+            .where('usuarioId', '==', usuario.uid)
+            .onSnapshot((querySnapshot) => {
+
+                const lista = [];
+
+                querySnapshot.forEach((doc) => {
+
+                    lista.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+
+                });
+
+                setLocais(lista);
+            });
 
         pegarLocalizacao();
     }, []);
@@ -89,7 +110,18 @@ export default function TelaPrincipal({ navigation }) {
                 style={styles.map}
                 region={regiao}
                 showsUserLocation={true}
-            />
+            >
+                {locais.map((local) => (
+                    <Marker
+                        key={local.id}
+                        coordinate={{
+                            latitude: local.latitude,
+                            longitude: local.longitude
+                        }}
+                        title={local.nome}
+                    />
+                ))}
+            </MapView>
 
             <Modal
                 visible={modalVisible}
