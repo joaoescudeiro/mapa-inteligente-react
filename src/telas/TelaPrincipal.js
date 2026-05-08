@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, Button, StyleSheet, Alert, TouchableOpacity, Modal, TextInput } from 'react-native';
 import firebase from '../services/firebaseConfig';
 import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -7,6 +7,8 @@ import * as Location from 'expo-location';
 export default function TelaPrincipal({ navigation }) {
 
     const [regiao, setRegiao] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [nomeLocal, setNomeLocal] = useState('');
 
     useEffect(() => {
         async function pegarLocalizacao() {
@@ -37,18 +39,27 @@ export default function TelaPrincipal({ navigation }) {
 
     async function salvarLocalizacao() {
 
+        if (!nomeLocal.trim()) {
+            Alert.alert('Erro', 'Digite um nome');
+            return;
+        }
+
         try {
 
             const usuario = firebase.auth().currentUser;
 
             await firebase.firestore().collection('locais').add({
+                nome: nomeLocal,
                 latitude: regiao.latitude,
                 longitude: regiao.longitude,
                 usuarioId: usuario.uid,
                 data: new Date()
             });
 
-            Alert.alert('Sucesso', 'Localização salva');
+            Alert.alert('Sucesso', 'Local salvo!');
+
+            setNomeLocal('');
+            setModalVisible(false);
 
         } catch (error) {
             Alert.alert('Erro', error.message);
@@ -67,9 +78,11 @@ export default function TelaPrincipal({ navigation }) {
 
             <TouchableOpacity
                 style={styles.botaoSalvar}
-                onPress={salvarLocalizacao}
+                onPress={() => setModalVisible(true)}
             >
-                <Text style={styles.textoBotao}>Salvar Local</Text>
+                <Text style={styles.textoBotao}>
+                    Salvar Local
+                </Text>
             </TouchableOpacity>
 
             <MapView
@@ -77,6 +90,43 @@ export default function TelaPrincipal({ navigation }) {
                 region={regiao}
                 showsUserLocation={true}
             />
+
+            <Modal
+                visible={modalVisible}
+                transparent={true}
+                animationType="slide"
+            >
+
+                <View style={styles.modalContainer}>
+
+                    <View style={styles.modalContent}>
+
+                        <Text style={styles.modalTitulo}>
+                            Nome do Local
+                        </Text>
+
+                        <TextInput
+                            placeholder="Digite o nome"
+                            value={nomeLocal}
+                            onChangeText={setNomeLocal}
+                            style={styles.input}
+                        />
+
+                        <Button
+                            title="Salvar"
+                            onPress={salvarLocalizacao}
+                        />
+
+                        <Button
+                            title="Cancelar"
+                            onPress={() => setModalVisible(false)}
+                        />
+
+                    </View>
+
+                </View>
+
+            </Modal>
         </View>
     );
 }
@@ -101,5 +151,31 @@ const styles = StyleSheet.create({
     textoBotao: {
         color: '#fff',
         fontWeight: 'bold',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+
+    modalContent: {
+        width: '80%',
+        backgroundColor: '#fff',
+        padding: 20,
+        borderRadius: 10,
+    },
+
+    modalTitulo: {
+        fontSize: 20,
+        marginBottom: 10,
+        textAlign: 'center',
+    },
+
+    input: {
+        borderWidth: 1,
+        marginBottom: 10,
+        padding: 10,
+        borderRadius: 8,
     },
 });
