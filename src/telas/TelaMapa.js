@@ -190,20 +190,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0,0.5)',
     },
-
     modalContent: {
         width: '80%',
         backgroundColor: '#fff',
         padding: 20,
         borderRadius: 10,
     },
-
     modalTitulo: {
         fontSize: 20,
         marginBottom: 10,
         textAlign: 'center',
     },
-
     input: {
         borderWidth: 1,
         marginBottom: 10,

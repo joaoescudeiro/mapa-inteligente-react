@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert, Modal, TextInput } from 'react-native';
 import firebase from '../services/firebaseConfig';
 
 export default function TelaLocais() {
 
     const [locais, setLocais] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [nomeEditado, setNomeEditado] = useState('');
+    const [localEditando, setLocalEditando] = useState(null);
 
     useEffect(() => {
 
@@ -31,6 +34,26 @@ export default function TelaLocais() {
 
     }, []);
 
+    async function editarLocal() {
+
+        try {
+
+            await firebase.firestore()
+                .collection('locais')
+                .doc(localEditando.id)
+                .update({
+                    nome: nomeEditado
+                });
+
+            Alert.alert('Sucesso', 'Local atualizado');
+
+            setModalVisible(false);
+
+        } catch (error) {
+            Alert.alert('Erro', error.message);
+        }
+    }
+
     async function excluirLocal(id) {
 
         try {
@@ -45,6 +68,12 @@ export default function TelaLocais() {
         } catch (error) {
             Alert.alert('Erro', error.message);
         }
+    }
+
+    function abrirModalEdicao(local) {
+        setLocalEditando(local);
+        setNomeEditado(local.nome);
+        setModalVisible(true);
     }
 
     return (
@@ -71,6 +100,15 @@ export default function TelaLocais() {
                         </Text>
 
                         <TouchableOpacity
+                            style={styles.botaoEditar}
+                            onPress={() => abrirModalEdicao(item)}
+                        >
+                            <Text style={styles.textoBotao}>
+                                Editar
+                            </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
                             style={styles.botaoExcluir}
                             onPress={() => excluirLocal(item.id)}
                         >
@@ -79,6 +117,49 @@ export default function TelaLocais() {
                             </Text>
                         </TouchableOpacity>
 
+                        <Modal
+                            visible={modalVisible}
+                            transparent={true}
+                            animationType="slide"
+                        >
+
+                            <View style={styles.modalContainer}>
+
+                                <View style={styles.modalContent}>
+
+                                    <Text style={styles.modalTitulo}>
+                                        Editar Local
+                                    </Text>
+
+                                    <TextInput
+                                        value={nomeEditado}
+                                        onChangeText={setNomeEditado}
+                                        style={styles.input}
+                                    />
+
+                                    <TouchableOpacity
+                                        style={styles.botaoEditar}
+                                        onPress={editarLocal}
+                                    >
+                                        <Text style={styles.textoBotao}>
+                                            Salvar Alterações
+                                        </Text>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity
+                                        style={styles.botaoExcluir}
+                                        onPress={() => setModalVisible(false)}
+                                    >
+                                        <Text style={styles.textoBotao}>
+                                            Cancelar
+                                        </Text>
+                                    </TouchableOpacity>
+
+                                </View>
+
+                            </View>
+
+                        </Modal>
                     </View>
 
                 )}
@@ -89,12 +170,10 @@ export default function TelaLocais() {
 }
 
 const styles = StyleSheet.create({
-
     container: {
         flex: 1,
         padding: 10,
     },
-
     card: {
         backgroundColor: '#fff',
         padding: 15,
@@ -102,13 +181,11 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         elevation: 3,
     },
-
     nome: {
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 5,
     },
-
     botaoExcluir: {
         marginTop: 10,
         backgroundColor: 'red',
@@ -116,10 +193,40 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         alignItems: 'center',
     },
-
     textoBotao: {
         color: '#fff',
         fontWeight: 'bold',
     },
-
+    botaoEditar: {
+        marginTop: 10,
+        backgroundColor: '#2196F3',
+        padding: 10,
+        borderRadius: 8,
+        alignItems: 'center',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    modalContent: {
+        width: '80%',
+        backgroundColor: '#fff',
+        padding: 20,
+        borderRadius: 10,
+    },
+    modalTitulo: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        textAlign: 'center',
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        padding: 10,
+        borderRadius: 8,
+        marginBottom: 10,
+    },
 });
