@@ -3,14 +3,11 @@ import { View, Text, StyleSheet, Switch } from 'react-native';
 import { ModoSimulacaoContext } from '../context/ModoSimulacaoContext';
 
 export default function TelaConfiguracoes() {
-
     const { modoSimulacao, setModoSimulacao, vibracaoAtiva, setVibracaoAtiva } = useContext(ModoSimulacaoContext);
 
     return (
         <View style={styles.container}>
-
             <View style={styles.linha}>
-
                 <Text style={styles.texto}>
                     Modo Simulação
                 </Text>
@@ -19,11 +16,9 @@ export default function TelaConfiguracoes() {
                     value={modoSimulacao}
                     onValueChange={setModoSimulacao}
                 />
-
             </View>
 
             <View style={styles.linha}>
-
                 <Text style={styles.texto}>
                     Vibração ao salvar local
                 </Text>
@@ -32,11 +27,9 @@ export default function TelaConfiguracoes() {
                     value={vibracaoAtiva}
                     onValueChange={setVibracaoAtiva}
                 />
-
             </View>
 
             <View style={styles.cardSobre}>
-
                 <Text style={styles.tituloSobre}>
                     Sobre o Aplicativo
                 </Text>
@@ -46,9 +39,7 @@ export default function TelaConfiguracoes() {
                     inteligente de locais utilizando
                     geolocalização e simulação de GPS.
                 </Text>
-
             </View>
-
         </View>
     );
 }
@@ -69,7 +60,7 @@ const styles = StyleSheet.create({
     cardSobre: {
         marginTop: 365,
         padding: 20,
-        backgroundColor: '#b0d1fd',
+        backgroundColor: '#adbdf4',
         borderRadius: 10,
     },
     tituloSobre: {

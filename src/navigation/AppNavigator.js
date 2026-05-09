@@ -13,16 +13,10 @@ export default function AppNavigator() {
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Inicio">
 
-                <Stack.Screen name="Inicio" component={TelaInicio} options={{
-                    headerBackVisible: false
-                }} />
+                <Stack.Screen name="Inicio" component={TelaInicio} options={{ headerBackVisible: false }} />
                 <Stack.Screen name="Login" component={TelaLogin} />
                 <Stack.Screen name="Cadastro" component={TelaCadastro} />
-                <Stack.Screen
-                    name="Principal"
-                    component={BottomTabs}
-                    options={{ headerShown: false }}
-                />
+                <Stack.Screen name="Principal" component={BottomTabs} options={{ headerShown: false }} />
 
             </Stack.Navigator>
         </NavigationContainer>

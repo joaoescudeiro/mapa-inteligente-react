@@ -10,30 +10,23 @@ import TelaConfiguracoes from '../telas/TelaConfiguracoes';
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabs() {
-
     return (
         <Tab.Navigator screenOptions={({ route }) => ({
-
             tabBarIcon: ({ color, size }) => {
-
                 let iconName;
 
                 if (route.name === 'Mapa') {
                     iconName = 'map';
                 }
-
                 else if (route.name === 'Locais') {
                     iconName = 'location';
                 }
-
                 else if (route.name === 'Perfil') {
                     iconName = 'person';
                 }
-
                 else if (route.name === 'Configurações') {
                     iconName = 'settings';
                 }
-
                 return (
                     <Ionicons
                         name={iconName}
@@ -42,31 +35,15 @@ export default function BottomTabs() {
                     />
                 );
             },
-
-            tabBarActiveTintColor: '#2196F3',
+            tabBarActiveTintColor: '#3060ff',
             tabBarInactiveTintColor: 'gray',
-
         })}>
 
-            <Tab.Screen
-                name="Mapa"
-                component={TelaMapa}
-            />
+            <Tab.Screen name="Mapa" component={TelaMapa} />
+            <Tab.Screen name="Locais" component={TelaLocais} />
+            <Tab.Screen name="Perfil" component={TelaPerfil} />
+            <Tab.Screen name="Configurações" component={TelaConfiguracoes} />
 
-            <Tab.Screen
-                name="Locais"
-                component={TelaLocais}
-            />
-
-            <Tab.Screen
-                name="Perfil"
-                component={TelaPerfil}
-            />
-
-            <Tab.Screen
-                name="Configurações"
-                component={TelaConfiguracoes}
-            />
         </Tab.Navigator>
     );
 }

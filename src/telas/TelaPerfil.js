@@ -4,15 +4,12 @@ import firebase from '../services/firebaseConfig';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function TelaPerfil({ navigation }) {
-
     const [usuario, setUsuario] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [novoNome, setNovoNome] = useState('');
 
     useEffect(() => {
-
         async function carregarUsuario() {
-
             const user =
                 firebase.auth().currentUser;
 
@@ -21,18 +18,13 @@ export default function TelaPerfil({ navigation }) {
                     .collection('usuarios')
                     .doc(user.uid)
                     .get();
-
             setUsuario(dados.data());
         }
-
         carregarUsuario();
-
     }, []);
 
     function sair() {
-
         firebase.auth().signOut();
-
         navigation.replace('Inicio');
     }
 
@@ -42,9 +34,7 @@ export default function TelaPerfil({ navigation }) {
     }
 
     async function salvarPerfil() {
-
         try {
-
             const user =
                 firebase.auth().currentUser;
 
@@ -66,27 +56,18 @@ export default function TelaPerfil({ navigation }) {
                 'Sucesso',
                 'Perfil atualizado'
             );
-
         } catch (error) {
-
-            Alert.alert(
-                'Erro',
-                error.message
-            );
+            Alert.alert('Erro', error.message);
         }
     }
 
     if (!usuario) {
-
         return <View style={styles.container} />;
     }
 
     return (
-
         <View style={styles.container}>
-
             <View style={styles.fotoContainer}>
-
                 <Ionicons
                     name="person-circle-outline"
                     size={120}
@@ -96,45 +77,27 @@ export default function TelaPerfil({ navigation }) {
                 <Text style={styles.nome}>
                     {usuario.nome}
                 </Text>
-
             </View>
 
             <Text style={styles.email}>
                 {usuario.email}
             </Text>
 
-            <TouchableOpacity
-                style={styles.botaoEditar}
-                onPress={editarPerfil}
-            >
-
+            <TouchableOpacity style={styles.botaoEditar} onPress={editarPerfil}>
                 <Text style={styles.textoBotao}>
                     Editar Perfil
                 </Text>
-
             </TouchableOpacity>
 
-            <TouchableOpacity
-                style={styles.botaoSair}
-                onPress={sair}
-            >
-
+            <TouchableOpacity style={styles.botaoSair} onPress={sair}>
                 <Text style={styles.textoBotao}>
                     Sair
                 </Text>
-
             </TouchableOpacity>
 
-            <Modal
-                visible={modalVisible}
-                transparent={true}
-                animationType="slide"
-            >
-
+            <Modal visible={modalVisible} transparent={true} animationType="slide">
                 <View style={styles.modalContainer}>
-
                     <View style={styles.modalContent}>
-
                         <Text style={styles.modalTitulo}>
                             Editar Perfil
                         </Text>
@@ -149,30 +112,22 @@ export default function TelaPerfil({ navigation }) {
                             style={styles.botaoEditar}
                             onPress={salvarPerfil}
                         >
-
                             <Text style={styles.textoBotao}>
                                 Salvar
                             </Text>
-
                         </TouchableOpacity>
 
                         <TouchableOpacity
                             style={styles.botaoSair}
                             onPress={() => setModalVisible(false)}
                         >
-
                             <Text style={styles.textoBotao}>
                                 Cancelar
                             </Text>
-
                         </TouchableOpacity>
-
                     </View>
-
                 </View>
-
             </Modal>
-
         </View>
     );
 }
@@ -200,18 +155,20 @@ const styles = StyleSheet.create({
     },
     botaoEditar: {
         width: '80%',
-        backgroundColor: '#2196F3',
+        backgroundColor: '#3a59b5',
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
         marginBottom: 15,
+        alignSelf: 'center',
     },
     botaoSair: {
         width: '80%',
-        backgroundColor: '#f44336',
+        backgroundColor: 'rgb(209, 64, 53)',
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
+        alignSelf: 'center',
     },
     textoBotao: {
         color: '#fff',

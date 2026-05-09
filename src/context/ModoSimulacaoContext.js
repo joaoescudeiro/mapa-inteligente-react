@@ -7,15 +7,7 @@ export function ModoSimulacaoProvider({ children }) {
     const [vibracaoAtiva, setVibracaoAtiva] = useState(true);
 
     return (
-        <ModoSimulacaoContext.Provider
-            value={{
-                modoSimulacao,
-                setModoSimulacao,
-
-                vibracaoAtiva,
-                setVibracaoAtiva
-            }}
-        >
+        <ModoSimulacaoContext.Provider value={{ modoSimulacao, setModoSimulacao, vibracaoAtiva, setVibracaoAtiva }}>
             {children}
         </ModoSimulacaoContext.Provider>
     );

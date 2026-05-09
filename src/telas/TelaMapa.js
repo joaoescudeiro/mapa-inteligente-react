@@ -4,9 +4,9 @@ import firebase from '../services/firebaseConfig';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { ModoSimulacaoContext } from '../context/ModoSimulacaoContext';
+import { BackHandler } from 'react-native';
 
 export default function TelaPrincipal({ navigation }) {
-
     const [regiao, setRegiao] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [nomeLocal, setNomeLocal] = useState('');
@@ -21,22 +21,26 @@ export default function TelaPrincipal({ navigation }) {
             .collection('locais')
             .where('usuarioId', '==', usuario.uid)
             .onSnapshot((querySnapshot) => {
-
                 const lista = [];
 
                 querySnapshot.forEach((doc) => {
-
                     lista.push({
                         id: doc.id,
                         ...doc.data()
                     });
-
                 });
-
                 setLocais(lista);
             });
-
         pegarLocalizacaoReal();
+    }, []);
+
+    useEffect(() => {
+        const backAction = () => {
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+        return () => backHandler.remove();
     }, []);
 
     useEffect(() => {
@@ -51,22 +55,15 @@ export default function TelaPrincipal({ navigation }) {
     }
 
     async function pegarLocalizacaoReal() {
-
         const { status } =
             await Location.requestForegroundPermissionsAsync();
 
         if (status !== 'granted') {
-
-            Alert.alert(
-                'Permissão negada',
-                'Não foi possível acessar sua localização'
-            );
-
+            Alert.alert('Permissão negada', 'Não foi possível acessar sua localização');
             return;
         }
 
-        const location =
-            await Location.getCurrentPositionAsync({});
+        const location = await Location.getCurrentPositionAsync({});
 
         setRegiao({
             latitude: location.coords.latitude,
@@ -77,14 +74,12 @@ export default function TelaPrincipal({ navigation }) {
     }
 
     async function salvarLocalizacao() {
-
         if (!nomeLocal.trim()) {
             Alert.alert('Erro', 'Digite um nome');
             return;
         }
 
         try {
-
             const usuario = firebase.auth().currentUser;
 
             await firebase.firestore().collection('locais').add({
@@ -102,7 +97,6 @@ export default function TelaPrincipal({ navigation }) {
 
             setNomeLocal('');
             setModalVisible(false);
-
         } catch (error) {
             Alert.alert('Erro', error.message);
         }
@@ -116,7 +110,7 @@ export default function TelaPrincipal({ navigation }) {
     return (
         <View style={styles.container}>
             <TouchableOpacity
-                style={styles.botaoSalvar}
+                style={styles.botaoSalvarLocal}
                 onPress={() => setModalVisible(true)}
             >
                 <Text style={styles.textoBotao}>
@@ -130,11 +124,8 @@ export default function TelaPrincipal({ navigation }) {
                 showsUserLocation={true}
 
                 onPress={(event) => {
-
                     if (modoSimulacao) {
-
-                        const coordenada =
-                            event.nativeEvent.coordinate;
+                        const coordenada = event.nativeEvent.coordinate;
 
                         setRegiao({
                             latitude: coordenada.latitude,
@@ -148,10 +139,7 @@ export default function TelaPrincipal({ navigation }) {
                             longitude: coordenada.longitude
                         });
 
-                        Alert.alert(
-                            'Modo Simulação',
-                            'Localização simulada alterada!'
-                        );
+                        Alert.alert('Modo Simulação', 'Localização simulada alterada!');
                     }
                 }}
             >
@@ -167,13 +155,11 @@ export default function TelaPrincipal({ navigation }) {
                 ))}
 
                 {localSimulado && (
-
                     <Marker
                         coordinate={localSimulado}
                         title="Localização Simulada"
                         pinColor="blue"
                     />
-
                 )}
             </MapView>
 
@@ -196,17 +182,32 @@ export default function TelaPrincipal({ navigation }) {
                             value={nomeLocal}
                             onChangeText={setNomeLocal}
                             style={styles.input}
+                            placeholderTextColor="#999"
                         />
 
-                        <Button
-                            title="Salvar"
+                        <TouchableOpacity
+                            style={styles.botaoSalvar}
                             onPress={salvarLocalizacao}
-                        />
+                        >
 
-                        <Button
-                            title="Cancelar"
-                            onPress={() => setModalVisible(false)}
-                        />
+                            <Text style={styles.textoBotao}>
+                                Salvar
+                            </Text>
+
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={styles.botaoCancelar}
+                            onPress={() =>
+                                setModalVisible(false)
+                            }
+                        >
+
+                            <Text style={styles.textoBotao}>
+                                Cancelar
+                            </Text>
+
+                        </TouchableOpacity>
 
                     </View>
 
@@ -225,24 +226,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
-    botaoSalvar: {
-        position: 'absolute',
-        width: 170,
-        height: 50,
-        bottom: 50,
-        alignSelf: 'center',
-        backgroundColor: '#2196F3',
-        padding: 12,
-        borderRadius: 10,
-        elevation: 5,
-        zIndex: 1,
-    },
-    textoBotao: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 17,
-        alignSelf: 'center',
-    },
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
@@ -250,15 +233,49 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.5)',
     },
     modalContent: {
-        width: '80%',
+        width: '85%',
         backgroundColor: '#fff',
-        padding: 20,
-        borderRadius: 10,
+        borderRadius: 15,
+        padding: 25,
     },
     modalTitulo: {
-        fontSize: 20,
-        marginBottom: 10,
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
         textAlign: 'center',
+        color: '#222',
+    },
+    botaoSalvar: {
+        backgroundColor: '#3a59b5',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    botaoCancelar: {
+        backgroundColor: 'rgb(209, 64, 53)',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    textoBotao: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'bold',
+        alignSelf: 'center',
+    },
+    botaoSalvarLocal: {
+        position: 'absolute',
+        width: 170,
+        height: 50,
+        bottom: 50,
+        alignSelf: 'center',
+        backgroundColor: '#3a59b5',
+        padding: 12,
+        borderRadius: 10,
+        elevation: 5,
+        zIndex: 1,
     },
     input: {
         borderWidth: 1,

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import firebase from '../services/firebaseConfig';
 import { Alert } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function TelaLogin({ navigation }) {
     const [email, setEmail] = useState('');
@@ -29,14 +30,25 @@ export default function TelaLogin({ navigation }) {
             });
     }
 
-
     return (
         <View style={styles.container}>
+            <Ionicons
+                name="person-circle-outline"
+                size={110}
+                color="#636363"
+                style={styles.icone}
+            />
+            <Text style={styles.titulo}>
+                Fazer Login
+            </Text>
+
             <TextInput
                 placeholder="Email"
                 value={email}
+                autoCapitalize="none"
                 onChangeText={setEmail}
                 style={styles.input}
+                placeholderTextColor="#999"
             />
 
             <TextInput
@@ -45,9 +57,18 @@ export default function TelaLogin({ navigation }) {
                 onChangeText={setSenha}
                 secureTextEntry
                 style={styles.input}
+                placeholderTextColor="#999"
             />
 
-            <Button title="Entrar" onPress={logar} />
+            <TouchableOpacity
+                style={styles.botao}
+                onPress={logar}
+            >
+
+                <Text style={styles.textoBotao}>
+                    Entrar
+                </Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -56,11 +77,37 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        padding: 20,
+        padding: 25,
+        backgroundColor: '#fff',
+    },
+    titulo: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        marginBottom: 40,
+        textAlign: 'center',
+        color: '#222',
     },
     input: {
-        borderWidth: 1,
+        backgroundColor: '#f2f2f2',
+        padding: 15,
+        borderRadius: 10,
+        marginBottom: 15,
+        fontSize: 16,
+    },
+    botao: {
+        backgroundColor: '#3a59b5',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    textoBotao: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    icone: {
+        alignSelf: 'center',
         marginBottom: 10,
-        padding: 10,
     },
 });

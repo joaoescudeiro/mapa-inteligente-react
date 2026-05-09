@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
 import firebase from '../services/firebaseConfig';
-import { Alert } from 'react-native';
-
+import { Ionicons } from '@expo/vector-icons';
 
 export default function TelaCadastro({ navigation }) {
     const [nome, setNome] = useState('');
@@ -27,9 +26,7 @@ export default function TelaCadastro({ navigation }) {
                     });
 
                 Alert.alert("Sucesso", "Usuário cadastrado com sucesso!");
-
                 navigation.replace('Principal');
-
             })
             .catch(error => {
                 const errorCode = error.code;
@@ -47,11 +44,23 @@ export default function TelaCadastro({ navigation }) {
 
     return (
         <View style={styles.container}>
+            <Ionicons
+                name="person-circle-outline"
+                size={110}
+                color="#636363"
+                style={styles.icone}
+            />
+
+            <Text style={styles.titulo}>
+                Criar Conta
+            </Text>
+
             <TextInput
                 placeholder="Nome"
                 value={nome}
                 onChangeText={setNome}
                 style={styles.input}
+                placeholderTextColor="#999"
             />
 
             <TextInput
@@ -59,6 +68,8 @@ export default function TelaCadastro({ navigation }) {
                 value={email}
                 onChangeText={setEmail}
                 style={styles.input}
+                placeholderTextColor="#999"
+                autoCapitalize="none"
             />
 
             <TextInput
@@ -67,9 +78,17 @@ export default function TelaCadastro({ navigation }) {
                 onChangeText={setSenha}
                 secureTextEntry
                 style={styles.input}
+                placeholderTextColor="#999"
             />
 
-            <Button title="Cadastrar" onPress={gravar} />
+            <TouchableOpacity
+                style={styles.botao}
+                onPress={gravar}
+            >
+                <Text style={styles.textoBotao}>
+                    Cadastrar
+                </Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -78,11 +97,37 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        padding: 20,
+        padding: 25,
+        backgroundColor: '#fff',
+    },
+    icone: {
+        alignSelf: 'center',
+        marginBottom: 10,
+    },
+    titulo: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        marginBottom: 40,
+        textAlign: 'center',
+        color: '#222',
     },
     input: {
-        borderWidth: 1,
-        marginBottom: 10,
-        padding: 10,
+        backgroundColor: '#f2f2f2',
+        padding: 15,
+        borderRadius: 10,
+        marginBottom: 15,
+        fontSize: 16,
+    },
+    botao: {
+        backgroundColor: '#4CAF50',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    textoBotao: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'bold',
     },
 });
