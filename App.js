@@ -1,5 +1,16 @@
 import AppNavigator from './src/navigation/AppNavigator';
 
+import { ModoSimulacaoProvider }
+  from './src/context/ModoSimulacaoContext';
+
 export default function App() {
-  return <AppNavigator />;
+  return (
+
+    <ModoSimulacaoProvider>
+
+      <AppNavigator />
+
+    </ModoSimulacaoProvider>
+
+  );
 }

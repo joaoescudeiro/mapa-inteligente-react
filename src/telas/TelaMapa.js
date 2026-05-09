@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, Button, StyleSheet, Alert, TouchableOpacity, Modal, TextInput, Vibration } from 'react-native';
 import firebase from '../services/firebaseConfig';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
+import { ModoSimulacaoContext } from '../context/ModoSimulacaoContext';
 
 export default function TelaPrincipal({ navigation }) {
 
@@ -11,27 +12,10 @@ export default function TelaPrincipal({ navigation }) {
     const [nomeLocal, setNomeLocal] = useState('');
     const [locais, setLocais] = useState([]);
     const usuario = firebase.auth().currentUser;
+    const { modoSimulacao } = useContext(ModoSimulacaoContext);
+    const [localSimulado, setLocalSimulado] = useState(null);
 
     useEffect(() => {
-        async function pegarLocalizacao() {
-
-            const { status } = await Location.requestForegroundPermissionsAsync();
-
-            if (status !== 'granted') {
-                Alert.alert('Permissão negada', 'Não foi possível acessar sua localização');
-                return;
-            }
-
-            const location = await Location.getCurrentPositionAsync({});
-
-            setRegiao({
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01,
-            });
-        }
-
         firebase.firestore()
             .collection('locais')
             .where('usuarioId', '==', usuario.uid)
@@ -51,11 +35,44 @@ export default function TelaPrincipal({ navigation }) {
                 setLocais(lista);
             });
 
-        pegarLocalizacao();
+        pegarLocalizacaoReal();
     }, []);
+
+    useEffect(() => {
+        if (!modoSimulacao) {
+            pegarLocalizacaoReal();
+            setLocalSimulado(null);
+        }
+    }, [modoSimulacao]);
 
     if (!regiao) {
         return <View style={styles.container} />;
+    }
+
+    async function pegarLocalizacaoReal() {
+
+        const { status } =
+            await Location.requestForegroundPermissionsAsync();
+
+        if (status !== 'granted') {
+
+            Alert.alert(
+                'Permissão negada',
+                'Não foi possível acessar sua localização'
+            );
+
+            return;
+        }
+
+        const location =
+            await Location.getCurrentPositionAsync({});
+
+        setRegiao({
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+        });
     }
 
     async function salvarLocalizacao() {
@@ -108,6 +125,32 @@ export default function TelaPrincipal({ navigation }) {
                 style={styles.map}
                 region={regiao}
                 showsUserLocation={true}
+
+                onPress={(event) => {
+
+                    if (modoSimulacao) {
+
+                        const coordenada =
+                            event.nativeEvent.coordinate;
+
+                        setRegiao({
+                            latitude: coordenada.latitude,
+                            longitude: coordenada.longitude,
+                            latitudeDelta: 0.01,
+                            longitudeDelta: 0.01,
+                        });
+
+                        setLocalSimulado({
+                            latitude: coordenada.latitude,
+                            longitude: coordenada.longitude
+                        });
+
+                        Alert.alert(
+                            'Modo Simulação',
+                            'Localização simulada alterada!'
+                        );
+                    }
+                }}
             >
                 {locais.map((local) => (
                     <Marker
@@ -119,6 +162,16 @@ export default function TelaPrincipal({ navigation }) {
                         title={local.nome}
                     />
                 ))}
+
+                {localSimulado && (
+
+                    <Marker
+                        coordinate={localSimulado}
+                        title="Localização Simulada"
+                        pinColor="blue"
+                    />
+
+                )}
             </MapView>
 
             <Modal

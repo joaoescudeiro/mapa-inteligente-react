@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, Switch } from 'react-native';
+import { ModoSimulacaoContext } from '../context/ModoSimulacaoContext';
 
 export default function TelaConfiguracoes() {
 
-    const [modoSimulacao, setModoSimulacao] = useState(false);
+    const { modoSimulacao, setModoSimulacao } = useContext(ModoSimulacaoContext);
 
     return (
         <View style={styles.container}>
