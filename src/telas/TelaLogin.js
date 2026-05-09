@@ -13,7 +13,6 @@ export default function TelaLogin({ navigation }) {
         firebase.auth()
             .signInWithEmailAndPassword(emailFormatado, senha)
             .then(() => {
-                Alert.alert("Sucesso", "Login realizado com sucesso!");
                 navigation.replace('Principal');
             })
             .catch(error => {

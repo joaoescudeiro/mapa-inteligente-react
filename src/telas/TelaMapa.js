@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Alert, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { View, Text, Button, StyleSheet, Alert, TouchableOpacity, Modal, TextInput, Vibration } from 'react-native';
 import firebase from '../services/firebaseConfig';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -78,6 +78,7 @@ export default function TelaPrincipal({ navigation }) {
             });
 
             Alert.alert('Sucesso', 'Local salvo!');
+            Vibration.vibrate(300);
 
             setNomeLocal('');
             setModalVisible(false);
@@ -94,9 +95,6 @@ export default function TelaPrincipal({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text>Usuário logado</Text>
-            <Button title="Sair" onPress={sair} />
-
             <TouchableOpacity
                 style={styles.botaoSalvar}
                 onPress={() => setModalVisible(true)}
@@ -173,16 +171,21 @@ const styles = StyleSheet.create({
     },
     botaoSalvar: {
         position: 'absolute',
-        top: 50,
-        left: 20,
+        width: 170,
+        height: 50,
+        bottom: 50,
+        alignSelf: 'center',
         backgroundColor: '#2196F3',
         padding: 12,
         borderRadius: 10,
+        elevation: 5,
         zIndex: 1,
     },
     textoBotao: {
         color: '#fff',
         fontWeight: 'bold',
+        fontSize: 17,
+        alignSelf: 'center',
     },
     modalContainer: {
         flex: 1,
