@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     },
     botaoCadastro: {
         width: '80%',
-        backgroundColor: '#4CAF50',
+        backgroundColor: '#54aa57',
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
