@@ -14,9 +14,22 @@ export default function TelaCadastro({ navigation }) {
 
         firebase.auth()
             .createUserWithEmailAndPassword(emailFormatado, senha)
-            .then(() => {
+            .then(async (userCredential) => {
+
+                const usuario = userCredential.user;
+
+                await firebase.firestore()
+                    .collection('usuarios')
+                    .doc(usuario.uid)
+                    .set({
+                        nome: nome,
+                        email: emailFormatado
+                    });
+
                 Alert.alert("Sucesso", "Usuário cadastrado com sucesso!");
+
                 navigation.replace('Principal');
+
             })
             .catch(error => {
                 const errorCode = error.code;

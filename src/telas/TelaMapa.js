@@ -13,6 +13,7 @@ export default function TelaPrincipal({ navigation }) {
     const [locais, setLocais] = useState([]);
     const usuario = firebase.auth().currentUser;
     const { modoSimulacao } = useContext(ModoSimulacaoContext);
+    const { vibracaoAtiva } = useContext(ModoSimulacaoContext);
     const [localSimulado, setLocalSimulado] = useState(null);
 
     useEffect(() => {
@@ -95,7 +96,9 @@ export default function TelaPrincipal({ navigation }) {
             });
 
             Alert.alert('Sucesso', 'Local salvo!');
-            Vibration.vibrate(300);
+            if (vibracaoAtiva) {
+                Vibration.vibrate(300);
+            }
 
             setNomeLocal('');
             setModalVisible(false);

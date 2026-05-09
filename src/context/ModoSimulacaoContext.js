@@ -4,12 +4,16 @@ export const ModoSimulacaoContext = createContext();
 
 export function ModoSimulacaoProvider({ children }) {
     const [modoSimulacao, setModoSimulacao] = useState(false);
+    const [vibracaoAtiva, setVibracaoAtiva] = useState(true);
 
     return (
         <ModoSimulacaoContext.Provider
             value={{
                 modoSimulacao,
-                setModoSimulacao
+                setModoSimulacao,
+
+                vibracaoAtiva,
+                setVibracaoAtiva
             }}
         >
             {children}

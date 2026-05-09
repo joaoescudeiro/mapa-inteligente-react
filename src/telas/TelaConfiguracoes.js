@@ -4,7 +4,7 @@ import { ModoSimulacaoContext } from '../context/ModoSimulacaoContext';
 
 export default function TelaConfiguracoes() {
 
-    const { modoSimulacao, setModoSimulacao } = useContext(ModoSimulacaoContext);
+    const { modoSimulacao, setModoSimulacao, vibracaoAtiva, setVibracaoAtiva } = useContext(ModoSimulacaoContext);
 
     return (
         <View style={styles.container}>
@@ -19,6 +19,33 @@ export default function TelaConfiguracoes() {
                     value={modoSimulacao}
                     onValueChange={setModoSimulacao}
                 />
+
+            </View>
+
+            <View style={styles.linha}>
+
+                <Text style={styles.texto}>
+                    Vibração ao salvar local
+                </Text>
+
+                <Switch
+                    value={vibracaoAtiva}
+                    onValueChange={setVibracaoAtiva}
+                />
+
+            </View>
+
+            <View style={styles.cardSobre}>
+
+                <Text style={styles.tituloSobre}>
+                    Sobre o Aplicativo
+                </Text>
+
+                <Text style={styles.textoSobre}>
+                    Aplicativo desenvolvido para gerenciamento
+                    inteligente de locais utilizando
+                    geolocalização e simulação de GPS.
+                </Text>
 
             </View>
 
@@ -38,5 +65,21 @@ const styles = StyleSheet.create({
     },
     texto: {
         fontSize: 18,
+    },
+    cardSobre: {
+        marginTop: 365,
+        padding: 20,
+        backgroundColor: '#b0d1fd',
+        borderRadius: 10,
+    },
+    tituloSobre: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+
+    textoSobre: {
+        fontSize: 15,
+        color: '#555',
     },
 });
