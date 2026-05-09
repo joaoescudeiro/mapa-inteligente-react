@@ -1,5 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
 
 import TelaMapa from '../telas/TelaMapa';
 import TelaLocais from '../telas/TelaLocais';
@@ -11,7 +12,41 @@ const Tab = createBottomTabNavigator();
 export default function BottomTabs() {
 
     return (
-        <Tab.Navigator>
+        <Tab.Navigator screenOptions={({ route }) => ({
+
+            tabBarIcon: ({ color, size }) => {
+
+                let iconName;
+
+                if (route.name === 'Mapa') {
+                    iconName = 'map';
+                }
+
+                else if (route.name === 'Locais') {
+                    iconName = 'location';
+                }
+
+                else if (route.name === 'Perfil') {
+                    iconName = 'person';
+                }
+
+                else if (route.name === 'Configurações') {
+                    iconName = 'settings';
+                }
+
+                return (
+                    <Ionicons
+                        name={iconName}
+                        size={size}
+                        color={color}
+                    />
+                );
+            },
+
+            tabBarActiveTintColor: '#2196F3',
+            tabBarInactiveTintColor: 'gray',
+
+        })}>
 
             <Tab.Screen
                 name="Mapa"
