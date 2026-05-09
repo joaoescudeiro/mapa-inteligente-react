@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TelaInicio from '../telas/TelaInicio';
 import TelaLogin from '../telas/TelaLogin';
 import TelaCadastro from '../telas/TelaCadastro';
-import TelaPrincipal from '../telas/TelaPrincipal';
 import BottomTabs from './BottomTabs';
 
 const Stack = createNativeStackNavigator();
