@@ -111,17 +111,17 @@ O app possui autenticação completa utilizando Firebase Authentication.
 
 <p align="center">
   <img
-    src="assets/readme/inicio.png"
+    src="assets/readme/inicio.jpeg"
     width="250"
   />
 
   <img
-    src="assets/readme/login.png"
+    src="assets/readme/login.jpeg"
     width="250"
   />
 
   <img
-    src="assets/readme/cadastro.png"
+    src="assets/readme/cadastro.jpeg"
     width="250"
   />
 </p>
