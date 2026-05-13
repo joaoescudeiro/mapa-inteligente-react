@@ -258,3 +258,13 @@ npm start
 No aplicativo Expo Go no celular, escaneie o QR Code exibido no terminal e o aplicativo será aberto no dispositivo
 
 ---
+
+## 7. Aprendizados e Próximos Passos
+
+O desenvolvimento deste projeto foi uma experiência importante para aprender os conceitos de desenvolvimento mobile utilizando React Native e Expo.
+
+Durante o projeto, foi possível praticar navegação entre telas, integração com Firebase, sensores e atuadores do dispositivo e a criação de interfaces mobile.
+
+Algumas possíveis melhorias seriam a implementação de um tema escuro para o app inteiro e o upload de foto de perfil.
+
+O projeto atingiu os objetivos propostos, resultando em um aplicativo funcional e com integração de diferentes recursos mobile.
