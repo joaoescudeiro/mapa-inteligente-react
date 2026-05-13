@@ -211,8 +211,6 @@ O sistema possui um modo de simulação que permite alterar manualmente a locali
 
 ## 6. Instalação e Execução
 
-Siga os passos abaixo para executar o projeto localmente.
-
 É necessário ter instalado:
 
 - Node.js
