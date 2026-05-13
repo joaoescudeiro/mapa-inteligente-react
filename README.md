@@ -6,7 +6,7 @@ O **Mapa Inteligente** é um aplicativo mobile desenvolvido em React Native com 
 
 O aplicativo foi criado com foco em praticar conceitos de desenvolvimento mobile, integração com Firebase, uso de sensores do dispositivo e navegação entre telas.
 
-Além do salvamento de locais no mapa, o sistema possui autenticação de usuários, edição de perfil, modo de simulação de localização e vibração do dispositivo ao salvar novos locais.
+Além do salvamento de locais no mapa, o sistema possui autenticação de usuários, edição de perfil e modo de simulação de localização.
 
 ---
 
