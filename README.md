@@ -46,11 +46,11 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias, bibliotecas e fe
 ### Linguagem de Programação
 - JavaScript
 
-### Backend e Banco de Dados
+### Banco de Dados
 - Firebase Authentication
 - Firebase Firestore
 
-### Mapas e Geolocalização
+### Mapas
 - react-native-maps
 - expo-location
 
@@ -59,7 +59,7 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias, bibliotecas e fe
 - @react-navigation/native-stack
 - @react-navigation/bottom-tabs
 
-### Interface e Ícones
+### Interface
 - react-native
 - @expo/vector-icons
 
