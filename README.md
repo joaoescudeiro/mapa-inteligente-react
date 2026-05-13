@@ -112,7 +112,6 @@ O app possui autenticação completa utilizando Firebase Authentication.
 - Cadastro de usuários
 - Login de usuários
 - Logout
-- Validação de e-mail e senha
 - Persistência de autenticação
 
 ---
