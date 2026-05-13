@@ -102,6 +102,12 @@ O aplicativo possui diversas funcionalidades voltadas para gerenciamento intelig
 
 O app possui autenticação completa utilizando Firebase Authentication.
 
+<p align="center">
+  <img src="assets/readme/inicio.jpeg" width="250"/>
+  <img src="assets/readme/login.jpeg" width="250"/>
+  <img src="assets/readme/cadastro.jpeg" width="250"/>
+</p>
+
 #### Funcionalidades:
 - Cadastro de usuários
 - Login de usuários
@@ -109,17 +115,15 @@ O app possui autenticação completa utilizando Firebase Authentication.
 - Validação de e-mail e senha
 - Persistência de autenticação
 
-<p align="center">
-  <img src="assets/readme/inicio.jpeg" width="200"/>
-  <img src="assets/readme/login.jpeg" width="200"/>
-  <img src="assets/readme/cadastro.jpeg" width="200"/>
-</p>
-
 ---
 
 ### Mapa Interativo
 
 O usuário pode visualizar sua localização atual em um mapa em tempo real utilizando GPS.
+
+<p align="center">
+  <img src="assets/readme/mapa.gif" width="250"/>
+</p>
 
 #### Funcionalidades:
 - Exibição do mapa
