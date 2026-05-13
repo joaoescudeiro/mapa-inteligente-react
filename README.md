@@ -208,3 +208,55 @@ O sistema possui um modo de simulação que permite alterar manualmente a locali
 - Marcador visual da localização simulada
 
 ---
+
+## 6. Instalação e Execução
+
+Siga os passos abaixo para executar o projeto localmente.
+
+É necessário ter instalado:
+
+- Node.js
+- npm
+- Expo CLI
+- Git
+- Expo Go no celular
+
+---
+
+### Clonar o Repositório
+
+```bash
+git clone https://github.com/joaoescudeiro/mapa-inteligente-react.git
+```
+
+---
+
+### Acessar a Pasta do Projeto
+
+```bash
+cd mapa-inteligente-react
+```
+
+---
+
+### Instalar as dependências
+
+```bash
+npm install
+```
+
+---
+
+### Executar o Projeto
+
+```bash
+npm start
+```
+
+---
+
+### Executar no Celular
+
+No aplicativo Expo Go no celular, escaneie o QR Code exibido no terminal e o aplicativo será aberto no dispositivo
+
+---
