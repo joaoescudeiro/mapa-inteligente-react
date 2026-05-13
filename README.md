@@ -137,6 +137,10 @@ O usuário pode visualizar sua localização atual em um mapa em tempo real util
 
 O usuário pode salvar locais diretamente no mapa.
 
+<p align="center">
+  <img src="assets/readme/salvarlocal.gif" width="250"/>
+</p>
+
 #### Funcionalidades:
 - Salvar localização atual
 - Nomear locais salvos
@@ -148,6 +152,10 @@ O usuário pode salvar locais diretamente no mapa.
 ### Gerenciamento de Locais (CRUD)
 
 O aplicativo possui CRUD completo para gerenciamento dos locais salvos.
+
+<p align="center">
+  <img src="assets/readme/menulocais.gif" width="250"/>
+</p>
 
 #### Funcionalidades:
 - Criar locais
