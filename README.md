@@ -169,6 +169,11 @@ O aplicativo possui CRUD completo para gerenciamento dos locais salvos.
 
 O sistema possui uma tela de perfil com informações do usuário autenticado.
 
+<p align="center">
+  <img src="assets/readme/perfil.jpeg" width="250"/>
+</p>
+
+
 #### Funcionalidades:
 - Exibição do nome do usuário
 - Exibição do e-mail
@@ -180,6 +185,11 @@ O sistema possui uma tela de perfil com informações do usuário autenticado.
 ### Tela de Configurações
 
 O aplicativo possui uma área de configurações para personalização de funcionalidades.
+
+<p align="center">
+  <img src="assets/readme/configuracoes.jpeg" width="250"/>
+</p>
+
 
 #### Funcionalidades:
 - Ativar/desativar modo simulação
