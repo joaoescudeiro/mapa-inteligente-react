@@ -210,6 +210,10 @@ O sistema possui um modo de simulação que permite alterar manualmente a locali
 
 ## 6. Instalação e Execução
 
+É possível testar o app em https://snack.expo.dev/@joaoescudeiro/mapa-inteligente-react ou clonando o repositório localmente. 
+
+
+### Para testar localmente:
 É necessário ter instalado:
 
 - Node.js
