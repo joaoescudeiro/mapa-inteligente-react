@@ -8,6 +8,8 @@ O aplicativo foi criado com foco em praticar conceitos de desenvolvimento mobile
 
 Além do salvamento de locais no mapa, o sistema possui autenticação de usuários, edição de perfil e modo de simulação de localização.
 
+Link do projeto no Expo Snack: https://snack.expo.dev/@joaoescudeiro/mapa-inteligente-react
+
 ---
 
 ## 2. Objetivos do Projeto
